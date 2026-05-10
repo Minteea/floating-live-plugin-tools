@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -9,15 +9,14 @@ const program = new Command();
 program
   .name("floating-live-plugin-tools")
   .description("Floating Live plugin tools CLI")
-  .version("1.0.0");
 
 program
   .command("info")
   .description("Display plugin information from plugin.json")
-  .action(() => {
+  .action(async () => {
     const pluginPath = path.join(process.cwd(), "plugin.json");
     try {
-      const raw = readFileSync(pluginPath, "utf-8");
+      const raw = await readFile(pluginPath, "utf-8");
       const json = JSON.parse(raw);
       if (!json.name) {
         throw new Error("plugin.json must contain a 'name' field");
@@ -35,14 +34,16 @@ program
 program
   .command("version")
   .description("Sync version from package.json to plugin.json in the current working directory")
-  .action(() => {
+  .action(async () => {
     const cwd = process.cwd();
     const pkgPath = path.join(cwd, "package.json");
     const pluginPath = path.join(cwd, "plugin.json");
 
     try {
-      const pkgRaw = readFileSync(pkgPath, "utf-8");
-      const pluginRaw = readFileSync(pluginPath, "utf-8");
+      const [pkgRaw, pluginRaw] = await Promise.all([
+        readFile(pkgPath, "utf-8"),
+        readFile(pluginPath, "utf-8"),
+      ]);
 
       const pkgJson = JSON.parse(pkgRaw);
       const pluginJson = JSON.parse(pluginRaw);
@@ -52,7 +53,7 @@ program
       }
 
       pluginJson.version = pkgJson.version;
-      writeFileSync(pluginPath, JSON.stringify(pluginJson, null, 2) + "\n", "utf-8");
+      await writeFile(pluginPath, JSON.stringify(pluginJson, null, 2) + "\n", "utf-8");
       console.log(`Synced version ${pkgJson.version} to plugin.json`);
     } catch (error) {
       console.error("Failed to sync plugin.json version:", error instanceof Error ? error.message : error);
@@ -60,4 +61,4 @@ program
     }
   });
 
-program.parse(process.argv);
+await program.parseAsync(process.argv);
