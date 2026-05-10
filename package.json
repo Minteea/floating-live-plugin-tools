@@ -5,7 +5,9 @@
   "private": false,
   "scripts": {
     "clear": "rimraf ./bin",
-    "build": "npm run clear && tsc --build"
+    "build": "npm run clear && tsc --build",
+    "prepack": "npm run build",
+    "postpack": "npm run clear"
   },
   "dependencies": {
     "commander": "^14.0.3"
