@@ -2,6 +2,7 @@
   "name": "@floating-live/plugin-tools",
   "type": "module",
   "version": "0.1.0-alpha.0",
+  "private": false,
   "scripts": {
     "clear": "rimraf ./bin",
     "build": "npm run clear && tsc --build"
@@ -16,5 +17,6 @@
   },
   "bin": {
     "floating-live-plugin-tools": "./bin/index.js"
-  }
+  },
+  "files": ["./bin"]
 }

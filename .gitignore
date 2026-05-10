@@ -22,3 +22,5 @@ node_modules
 yarn.lock
 .yarnrc.yml
 *.tsbuildinfo
+*.tgz
+*.log
