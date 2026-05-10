@@ -1,7 +1,7 @@
 {
   "name": "@floating-live/plugin-tools",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha.0",
   "scripts": {
     "clear": "rimraf ./bin",
     "build": "npm run clear && tsc --build"
