@@ -1,7 +1,7 @@
 {
   "name": "@floating-live/plugin-tools",
   "type": "module",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "private": false,
   "scripts": {
     "clear": "rimraf ./bin",
@@ -18,5 +18,7 @@
   "bin": {
     "floating-live-plugin-tools": "./bin/index.js"
   },
-  "files": ["./bin"]
+  "files": [
+    "./bin"
+  ]
 }
