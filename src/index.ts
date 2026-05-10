@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { exec } from "node:child_process";
+// import { exec } from "node:child_process";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
@@ -57,7 +57,7 @@ program
       await writeFile(pluginPath, JSON.stringify(pluginJson, null, 2) + "\n", "utf-8");
       console.log(`Synced version ${pkgJson.version} to plugin.json`);
 
-      exec('git add plugin.json', { cwd: process.cwd() });
+      // exec('git add plugin.json', { cwd: process.cwd() });
 
     } catch (error) {
       console.error("Failed to sync plugin.json version:", error instanceof Error ? error.message : error);
